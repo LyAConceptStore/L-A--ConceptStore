@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Catálogo Online - Showroom Exclusivo</title>
+    <style>
+        :root {
+            --primary: #111;
+            --accent: #d4af37; /* Dorado elegante */
+            --bg: #f5f0e6;     /* Color crema adaptable premium, inspirado en papel craft y lino */
+            --kraft-dark: #c0a684; /* Tono papel kraft más oscuro/tostado para destacar botones */
+            --card-bg: #fffcf7; /* Marfil muy claro para las tarjetas para dar contraste limpio */
+            --text: #2c251e;    /* Marrón/Carbón oscuro para una lectura suave integrada */
+            --success: #25d366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Desplazamiento suave al usar anclas */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 80px;
+        }
+
+        header {
+            position: relative; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('imagenes/concept store.jpg');        
+            background-size: cover;        
+            background-position: center;   
+            background-repeat: no-repeat;  
+            background-color: #1a1a1a; 
+            color: white;
+            text-align: left;
+            padding: 3rem 1.5rem;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            max-width: 80%; 
+            color: #ffffff !important;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+
+        header p {
+            color: #e0e0e0 !important; 
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* ℹ️ SECCIÓN ACERCA DE NOSOTROS OPTIMIZADA (COLAPSABLE) */
+        .about-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(44, 37, 30, 0.05);
+            padding: 1.5rem 2rem;
+            margin-top: 1rem;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid var(--accent);
+            border-right: 1px solid #e6ded2;
+            border-top: 1px solid #e6ded2;
+            border-bottom: 1px solid #e6ded2;
+        }
+
+        /* Título interactivo */
+        .about-toggle-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .about-toggle-title::after {
+            content: '▼';
+            font-size: 0.9rem;
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+
+        .about-section.active .about-toggle-title::after {
+            transform: rotate(180deg);
+        }
+
+        /* Contenedor del contenido (oculto por defecto) */
+        .about-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, margin-top 0.3s ease;
+        }
+
+        .about-section.active .about-content {
+            max-height: 2000px; /* Permitir que se expanda por completo */
+            margin-top: 1.5rem;
+        }
+
+        .about-block {
+            margin-bottom: 1.8rem;
+        }
+
+        .about-block:last-of-type {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.6rem;
+        }
+
+        .about-section p {
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: #4a4138;
+            margin-bottom: 0.8rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .feature-item {
+            background: #fffefb;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #ebdcb2;
+            border-top: 3px solid var(--accent);
+        }
+
+        .feature-item h4 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .thanks-note {
+            font-style: italic;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1.5rem;
+            border-top: 1px dashed #e6ded2;
+            padding-top: 1rem;
+            text-align: center;
+        }
+
+        /* Buscador y Filtros */
+        .search-container {
+            margin: 1rem 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        #searchBar {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #c8beaf;
+            background-color: var(--card-bg);
+            color: var(--text);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #searchBar:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap; 
+        }
+
+        .tab-btn {
+            background: #e6ded2;
+            color: var(--text);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        /* Grilla de Productos */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(44, 37, 30, 0.04);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e8e2d5;
+            cursor: pointer; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 14px rgba(44, 37, 30, 0.08);
+        }
+
+        .card-img {
+            height: 200px;
+            background: #fdfaf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #f2ece0;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .tag {
+            align-self: flex-start;
+            background: #f2ece0;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #61564b;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .card-brand {
+            font-size: 0.85rem;
+            color: #7a6f64;
+            margin-bottom: 1rem;
+        }
+
+        .price-row {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .btn-buy {
+            background-color: var(--success); 
+            color: white;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-buy:hover {
+            background-color: #128c7e;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 0.8rem;
+            }
+            .card-title { font-size: 0.95rem; }
+            .price { font-size: 1.05rem; }
+            .btn-buy { padding: 0.5rem 0.5rem; font-size: 0.8rem; }
+            .about-section { padding: 1.2rem 1rem; }
+        }
+
+        /* ☰ BOTÓN DE MENÚ HAMBURGUESA */
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--kraft-dark); 
+            border: 1px solid var(--accent);
+            color: var(--text); 
+            font-size: 1.5rem;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* 📌 MENÚS LATERALES CON TONO CREMA UNIFICADO PREMIUM */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: var(--bg); 
+            color: var(--text);          
+            border-left: 3px solid var(--accent);
+            box-shadow: -5px 0 15px rgba(44, 37, 30, 0.15);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #sidebarMenu { right: -320px; }
+        #sidebarMenu.open { right: 0; }
+
+        #sidebarCart { 
+            right: -320px; 
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        #sidebarCart.open { right: 0; }
+
+        .close-btn {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            color: var(--text); 
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .sidebar-link {
+            color: var(--text); 
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 10px;
+            border-bottom: 1px solid #e6ded2; 
+            transition: 0.2s;
+        }
+
+        .sidebar-link:hover {
+            color: var(--accent);
+            padding-left: 15px;
+        }
+
+        /* 🛒 CARRITO ELEMENTOS INTERNOS */
+        .cart-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-bottom: 2px solid #e8e2d5;
+            padding-bottom: 0.5rem;
+            margin-top: -10px;
+            color: var(--primary);
+        }
+
+        .cart-items-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-bottom: 1px solid #e8e2d5;
+            padding-bottom: 10px;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #eee;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: #7a6f64;
+            margin-top: 2px;
+        }
+
+        .cart-qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .qty-btn {
+            background: #e6ded2;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--text);
+        }
+
+        .qty-btn:hover { background: #ded6c9; }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 5px;
+        }
+
+        .cart-footer {
+            border-top: 2px solid #e8e2d5;
+            padding-top: 1rem;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-checkout:hover { background-color: #128c7e; }
+
+        /* 🛒 WIDGET FLOTANTE DEL CARRITO (CARRITO SVG NEGRO SÓLIDO, FONDO CLARO) */
+        .cart-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--kraft-dark); /* Fondo crema/kraft claro original */
+            border: 2px solid var(--accent);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        .cart-widget:hover {
+            transform: scale(1.08);
+        }
+
+        .cart-widget svg {
+            display: block;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 7px;
+            border-radius: 10px;
+            border: 2px solid var(--kraft-dark); /* Borde adaptado al color del fondo claro */
+        }
+
+        /* 📦 MODAL DE ESPECIFICACIONES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-top: 5px solid var(--accent);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e6ded2;
+            color: var(--text);
+            border: none;
+            font-size: 1.2rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #fdfaf4;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #f2ece0;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .modal-specs {
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #4a4138;
+            background: #f2ece0;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="sidebar" id="sidebarMenu">
+            <button class="close-btn" onclick="toggleMenu()">✕</button>
+            <a href="#" class="sidebar-link" onclick="toggleMenu()">Inicio</a>
+            <a href="#acerca-de-nosotros" class="sidebar-link" onclick="openAboutSection(); toggleMenu()">Acerca de Nosotros</a>
+            <a href="https://wa.me/5491126393170" target="_blank" class="sidebar-link">Contacto Directo (WhatsApp)</a>
+            <a href="https://instagram.com/TU_USUARIO" target="_blank" class="sidebar-link">Síguenos en Instagram</a>
+        </div>
+
+        <h1>L&A - CONCEPT STORE</h1>
+        <p>Perfumería, Tecnología, Bazar & Regalería</p>
+    </header>
+
+    <div class="sidebar" id="sidebarCart">
+        <button class="close-btn" onclick="toggleCart()">✕</button>
+        <div class="cart-title">Tu Carrito</div>
+        
+        <div class="cart-items-container" id="cartItems">
+            </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="btn-checkout" onclick="sendCartWhatsApp()">
+                Enviar Pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <div class="cart-widget" onclick="toggleCart()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#000000" width="32px" height="32px">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.9 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </div>
+
+    <div class="container">
+
+        <section class="about-section" id="acerca-de-nosotros">
+            <div class="about-toggle-title" onclick="toggleAboutSection()">
+                ✨ Acerca de Nosotros
+            </div>
+            
+            <div class="about-content">
+                <div class="about-block">
+                    <h3>Quiénes Somos</h3>
+                    <p>
+                        Somos una pareja emprendedora que entiende el ritmo de la vida actual: sabemos que tu tiempo vale oro y que tu hogar es tu refugio. Nacimos con la idea de simplificar tus compras diarias, creando un espacio donde podés encontrar desde el perfume que te identifica o los productos para mantener tu casa impecable, hasta el hardware y los electrodomésticos que potencian tu día a día.
+                    </p>
+                    <p>
+                        Unimos lo mejor del hogar, el cuidado personal y la tecnología en un solo lugar, seleccionando cada artículo con un estándar claro: calidad que se nota y precios que cuidan tu bolsillo.
+                    </p>
+                </div>
+
+                <div class="about-block">
+                    <h3>Qué Nos Mueve</h3>
+                    <p>
+                        Creemos que equipar tu cocina, armar tu espacio de trabajo o estudio, y cuidar de los tuyos no debería requerir comprar en diez lugares diferentes. Nos mueve la practicidad, la innovación y el deseo de ofrecerte soluciones reales y duraderas para cada rincón de tu vida.
+                    </p>
+                </div>
+
+                <div class="about-block">
+                    <h3>Nuestro Compromiso contigo</h3>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <h4>Variedad Inteligente</h4>
+                            <p>Un catálogo pensado para resolver necesidades reales de tecnología, bazar y hogar.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Confianza y Respaldo</h4>
+                            <p>Desde un periférico para tu PC hasta un artículo de cocina, probamos la calidad de lo que ofrecemos.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Servicio de Pareja a Pareja</h4>
+                            <p>Te atendemos de forma directa, ágil y transparente, como a nosotros nos gustaría que nos atiendan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="thanks-note">¡Gracias por confiar en nosotros y permitirnos ser parte de tu hogar y tu rutina! 🙌</p>
+            </div>
+        </section>
+
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Buscar producto o marca..." onkeyup="filterProducts()">
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="filterCategory('all', this)">Todos</button>
+            <button class="tab-btn" onclick="filterCategory('vamos-argentina', this)">Vamos Argentina 🇦🇷</button>
+            <button class="tab-btn" onclick="filterCategory('perfume', this)">Perfumes</button>
+            <button class="tab-btn" onclick="filterCategory('parlante', this)">Parlantes</button>
+            <button class="tab-btn" onclick="filterCategory('perifericos-hardware', this)">Periféricos & Hardware</button>
+            <button class="tab-btn" onclick="filterCategory('cocina-bazar', this)">Cocina & Bazar</button>
+            <button class="tab-btn" onclick="filterCategory('regaleria', this)">Regalería</button>
+            <button class="tab-btn" onclick="filterCategory('limpieza', this)">Limpieza</button>
+        </div>
+
+        <div class="grid" id="productGrid"></div>
+    </div>
+
+    <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(null, true)">✕</button>
+            <img id="modalImg" class="modal-img" src="" alt="">
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalBrand" style="color: #7a6f64; font-size: 0.9rem; margin-bottom: 0.5rem;"></p>
+            <div id="modalSpecs" class="modal-specs"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                <span id="modalPrice" style="font-size: 1.5rem; font-weight: bold; color: var(--primary);"></span>
+                <div id="modalActionBtn"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const misNumerosWhatsApp = [
+            "5491126393170",
+            "5491161243798"
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+
+        const products = [
+          // COCINA & BAZAR (Ordenados por precio)
+            { id: 45, title: "Taper Rectangular 1,1L", brand: "Genérico", price: 1500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1763238944969-35193519.jpg" },
+            { id: 32, title: "Espátula Calada Nylon Gris", brand: "Hudson", price: 3500, category: "cocina-bazar", image: "https://imgs.search.brave.com/N7oigdCFlxc2k-Ln3lsQ1WSHDij0MBp4eeZ6gntJWVo/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odWRz/b25jb2NpbmEuY29t/Lm14L2Nkbi9zaG9w/L2ZpbGVzL3V0NDRn/LTAyXzE1XzEwXzIw/MjRfMTJfOF81MV82/MTcuanBnP3Y9MTcz/NTMwNDUyNyZ3aWR0/aD0xNDQ1" },
+            { id: 35, title: "Cucharón Nylon Gris", brand: "Hudson", price: 3500, category: "cocina-bazar", image: "https://imgs.search.brave.com/ip-ECp40cx-pH9wOwZc-UulSfEr6IaFvoYH_h8XbK9Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF85/ODQ4NjktTUxVNzUy/MDkyNDEyNDZfMDMy/MDI0LU8ud2VicA" },
+            { id: 37, title: "Espumadera De Nylon Gris", brand: "Hudson", price: 3500, category: "cocina-bazar", image: "https://imgs.search.brave.com/7kDUCI8hZqELnWS3UqKScUlU-uD1s-9qzxZgA_6s2Ks/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odWRz/b25jb2NpbmEuY29t/Lm14L2Nkbi9zaG9w/L2ZpbGVzL3V0NDVn/LTAyXzE1XzEwXzIw/MjRfMTNfNl8yMF81/MjVfYzA4YjZmMTQt/ODQzNy00MDg4LWJi/NjQtNTAzNmY2MGEx/MmU0LmpwZz92PTE3/NTYzOTgxNTgmd2lk/dGg9MTQ0NQ" },
+            { id: 39, title: "Cuchara Ranurada Nylon", brand: "Hudson", price: 3500, category: "cocina-bazar", image: "https://imgs.search.brave.com/2dgAum5L8J3uZy7rKYbL_-vy3kaltoGwBQHguqHfREQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF85/ODA0MzItQ0JUODA3/NzkwNDM3MTFfMTEy/MDI0LU8ud2VicA" },
+            { id: 40, title: "Cuchara De Nylon Negra", brand: "Hudson", price: 3500, category: "cocina-bazar", image: "https://imgs.search.brave.com/yozKPrExEWVHy1YtHi34X4byKuAJe6dhVhn3pb1yXvo/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF84/NzQ4MzMtTUxBNzE5/NTc0NTYwNjNfMDky/MDIzLU8ud2VicA" },
+            { id: 44, title: "Hermético Rectangular 2L", brand: "Mandalas", price: 4000, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763238951971-35383538.jpg" },
+            { id: 43, title: "Hermético Rectangular 3,9L", brand: "BGA", price: 5000, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763238944606-35573557.jpg" },
+            { id: 42, title: "Hermético Rectangular Tapa-Trabas 1.5L", brand: "Deses Plast", price: 6500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cd1d4d2d24cd1d4d2d26363/public/5717460574924191/1763238964651-36003600.jpg" },
+            { id: 31, title: "Espumadera Nylon Mango Acero", brand: "Hudson", price: 7000, category: "cocina-bazar", image: "https://imgs.search.brave.com/Xm4Vd2aBQjLeOEBKzUPafmHbFoSWS24ATgX_XmU9PNI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF84/NzMyNDAtTUxBNTM3/NTMxNzkxNzVfMDIy/MDIzLU8ud2VicA" },
+            { id: 34, title: "Cucharón Nylon Mango Acero", brand: "Hudson", price: 7000, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763238940262-12441244.jpg" },
+            { id: 36, title: "Espumadera De Nylon + Mango Madera", brand: "Hudson", price: 7000, category: "cocina-bazar", image: "https://imgs.search.brave.com/mPqc0PIpRNOC8l-rQeTsxKuM6By3rfSXilcGBnIecV4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odWRz/b25jb2NpbmEuY29t/Lm14L2Nkbi9zaG9w/L2ZpbGVzLzAyXzI1/MjB1dF8yNTIwZXNw/dW1hZGVyYV8yNl8x/MV8yMDI0XzlfMF81/MV84MDguanBnP3Y9/MTc1MDk0NDk4MiZ3/aWR0aD0xNDQ1" },
+            { id: 28, title: "Pelapapa Vertical Acero Inox. Negro", brand: "Hudson", price: 7500, category: "cocina-bazar", image: "https://imgs.search.brave.com/mtuyuS1rnxbaAQCu755PmdvHcqIK1QNAedmgOw5bk04/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzc0MTExMi1NTEE4/NDQwMjgxNTA0Nl8w/NTIwMjUtRS53ZWJw", description: "Hoja pivotante de acero inoxidable ultra afilada." },
+            { id: 41, title: "Hermético Rectangular Tapa y Trabas 3L", brand: "Genérico", price: 8000, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1763238960149-36613661.jpg" },
+            { id: 30, title: "Rallador Hexagonal Acero Inox.", brand: "Hudson", price: 8500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1763238926150-15321532.jpg" },
+            { id: 38, title: "Espumadera De Acero Inoxidable", brand: "Hudson", price: 8500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1770837570755-imgi21232.png" },
+            { id: 33, title: "Pisapapa Nylon Negro", brand: "Hudson", price: 9500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763238928309-12061206.jpg" },
+            { id: 27, title: "Abrelata Mecánico Negro", brand: "Genérico", price: 11000, category: "cocina-bazar", image: "https://imgs.search.brave.com/lwPOEUGCm2Hk5WTl4NTUyt7Mq-XkJMHrX2c4ZTfTP2I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZGlzdHJpZWNvbm8u/Y29tLmFyL3RodW1i/Lzk0MTRfMDBfODAw/eDgwMC5qcGc", description: "Corte continuo sin esfuerzo. Engranaje de acero templado." },
+            { id: 29, title: "Rallador 4 Caras Acero Inox. Negro 23cm", brand: "Hudson", price: 14500, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778014461084-imgi21527.png", description: "4 tipos de corte (fino, medio, grueso, rebanador)." },
+            { id: 26, title: "Cuchillo Hacha Mango de Madera DSH", brand: "s/c", price: 18000, category: "cocina-bazar", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763238920779-14201420.jpg", description: "Utensilio de alta resistencia mecánica, terminación premium suave al tacto." },
+            // LIMPIEZA
+            { id: 51, title: "Limpiador + Mopa y Dispenser", brand: "s/c", price: 20000, category: "limpieza", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1778517993425-6649-16649-1.jpg", description: "Balde centrífugo con mopa de microfibra." },
+            // PARLANTES & AUDIO
+            { id: 21, title: "PARLANTE CHICO, WIRELESS SPEAKER", brand: "Genérico", price: 12000, category: "parlante", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778518200376-8771-18771-1.jpg", description: "Mini parlante de bolsillo. Sorprendente volumen para su tamaño, recargable mediante USB." },
+            { id: 20, title: "Parlante portátil LED en Barra OM-40", brand: "OM", price: 30000, category: "parlante", image: "https://scontent.fepa8-1.fna.fbcdn.net/v/t39.84726-6/738040818_2059438948298599_6635548516760887837_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=107&ccb=1-7&_nc_sid=92e707&_nc_eui2=AeH3OI4zqMSip661ZdV-froBM4tmikYYjp4zi2aKRhiOnjWxs8J2Xerp9AZFG2K3YlJMr5YjGtSkXCQiQWytqnFZ&_nc_ohc=WGzH8Wt0hTAQ7kNvwGXl0Ns&_nc_oc=AdpFzeAlYDKmXN1baM43Q_vJprK6CIr781NYIU8TCr9fo5UWQeJChkmCXIsQT9Sc-yezfXbKdvwgss3XzTQLAPek&_nc_zt=14&_nc_ht=scontent.fepa8-1.fna&_nc_gid=c2RN2YfRn6B-evn9envAEA&_nc_ss=7b2a8&oh=00_AQC68uF39kuejYL18kj9b0Y1ebwbKITHsAyf67ywDLVelw&oe=6A50CF86", description: "Barra inalámbrica compacta y liviana, fácil de transportar. Sonido claro y agudos definidos." },
+            { id: 18, title: "PARLANTE OM con Led S6200", brand: "OM", price: 31000, category: "parlante", image: "https://scontent.fepa14-1.fna.fbcdn.net/v/t39.84726-6/740425640_964603919949007_6186145807208583982_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=92e707&_nc_eui2=AeGDh6mezIQfswrubeKPiwe-ROUCI4ArkDxE5QIjgCuQPF27XNcZldeZTY2qviQCyNZRKewaZT_o8NG566HVGliB&_nc_ohc=xDiVh6VJcGIQ7kNvwH1PhHB&_nc_oc=AdoR5YRfk8Y2KnlX-I9JJrKseDfhlY68npNf2BCinATzcPmCxq9wmQq3xBpr5fHaFR6PwByU5CQqZN70lhdKVQSK&_nc_zt=14&_nc_ht=scontent.fepa14-1.fna&_nc_gid=N5qduuotaojjPm21COx0Zg&_nc_ss=7b2a8&oh=00_AQDKLHP4avCjJoV4YEprLl3-DE_5Z7hd-6ZBjUeHg2IbAQ&oe=6A50ACF7", description: "Luces LED rítmicas integradas. Conexión Bluetooth estable, entrada USB y tarjeta SD." },
+            { id: 19, title: "Barra de Sonido LED OM-139", brand: "OM", price: 42000, category: "parlante", image: "https://http2.mlstatic.com/D_NQ_NP_2X_600442-MLA107398376434_032026-F.webp", description: "Diseño alargado ideal para PC or TV. Iluminación LED Gamer y gran potencia estéreo." },
+            { id: 17, title: "PARLANTE PORTATIL C. TIRA SRS-XB13, SONY", brand: "Sony", price: 66500, category: "parlante", image: "https://imgs.search.brave.com/kJOleIfBTE5DP9CDYNBcoqG_ihkku_1Za7x4Fd9fs38/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF83/NDI4MjUtTUxVNzI5/MDM2NDk3NjVfMTEy/MDIzLU8ud2VicA", description: "Extra Bass para un sonido profundo y rotundo. Resistente al agua y al polvo (IP67). Batería de hasta 16 horas." },
+            { id: 23, title: "Portátil c/ Manija GO4", brand: "JBL", price: 66500, category: "parlante", image: "https://imgs.search.brave.com/-Zz_yHm8oji0lR4siwizE5I4GCeNXXNcwk9vdxS-iZo/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzc4NTEyNS1NTEE4/MzEyNDE4OTAyNl8w/MzIwMjUtVC53ZWJw", description: "Parlante portátil inalámbrico de alta fidelidad con manija de transporte integrada." },
+            // PERIFÉRICOS & HARDWARE
+            { id: 22, title: "Auriculares Vincha Bluetooth HP06 Inalámbricos", brand: "Genérico", price: 12000, category: "perifericos-hardware", image: "https://scontent.fepa14-1.fna.fbcdn.net/v/t39.84726-6/738853990_1569755001535483_4039798846528471796_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=92e707&_nc_eui2=AeFHlZu0dxwInDNHEuPd0Nf7-_10ZK0VHWD7_XRkrRUdYAkDqMOHg0ASWkxZKs1lVpV0wWHD6XBKUywR32e9Uv3b&_nc_ohc=1WtZ-pPSMT0Q7kNvwEX1cYJ&_nc_oc=Ado3639-9dc9RHRxdOJzxQZn_ODuQNWxEOcA-AafE464NHQ9z8qusJeRisGpIFo0VjIF3rlR989wycOB_ZTe6zJJ&_nc_zt=14&_nc_ht=scontent.fepa14-1.fna&_nc_gid=wAIDfA2Xf80o8uTDX6jajA&_nc_ss=7b2a8&oh=00_AQBmjlKXaaemHi4Q0oYtcd_rGeorq9k4iGWJZvp2FmeXRw&oe=6A50B4F3", description: "Manos libres integrado. Diseño resistente con controles físicos de reproducción superiores." },
+            { id: 24, title: "Mouse Pad Gamer LED LT-2508", brand: "Lambotech", price: 17000, category: "perifericos-hardware", image: "https://scontent.fepa8-1.fna.fbcdn.net/v/t45.5328-4/737738655_2183147322260971_8153240934175778715_n.jpg?stp=c0.0.260.260a_dst-jpg_p261x260_tt6&_nc_cat=111&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHvkLx_7vM5D5vsiA5_Z2FOvM1gm_1WwgS8zWCb_VbCBJvK-BqOs-GOBSK6oXIfLZ48ZGc2YiZpkiixGrM5tvuP&_nc_ohc=bAYO4eYznYQQ7kNvwEl5oIm&_nc_oc=AdowQezJ8Gl4nZSMhtrR390wYlHwwOEmqVU7ibIGHHxbpFRMPeuifRtkRmUjrE639IYciO3lObjDNXXUJ0KLHFMi&_nc_zt=23&_nc_ht=scontent.fepa8-1.fna&_nc_gid=YJeEC2cNNibOm9FqDR9D_g&_nc_ss=7b2a8&oh=00_AQB_twqVG4VlthhrqlT2Xd1NR-C2QA8LaGeATTIRgYtcbA&oe=6A54B6E1", description: "Mouse pad de tamaño extendido con bordes retroiluminados LED RGB." },
+            { id: 25, title: "Vincha Soft SO-125", brand: "Sony", price: 28000, category: "perifericos-hardware", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1774550665239-imgi27043.png", description: "Auriculares de diseño vincha soft con almohadillas ultra suaves y acolchadas." },
+            // PERFUMES (Ordenados por precio)
+            { id: 5, title: "9PM Afnan Azul 30ml", brand: "Afnan", price: 13000, category: "perfume", image: "https://imgs.search.brave.com/IENL6PwgK64YivtdrlUL3mjCArOQRXETklCupf2ueYk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dmFsdmVyZGVkcm9n/ZXJpYS5jb20vd3At/Y29udGVudC91cGxv/YWRzLzIwMjYvMDIv/YWZuYW4tOWFtLWNh/amEtYm90ZWxsYV93/cF93ZWItMTAyNHgx/MDI0LndlYnA", description: "Versión compacta de viaje. Notas frescas y especiadas, perfecto para el uso diario." },
+            { id: 6, title: "9PM Afnan Gris 30ml", brand: "Afnan", price: 13000, category: "perfume", image: "https://imgs.search.brave.com/VeYhZcQIAxsK8jZ9djv5UlFih8rmKHyIPFLetK_jmm8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9OUV9OUF83/OTY3NDQtTUxBODI1/ODQ2Njg1ODhfMDMy/MDI1LU8ud2VicA", description: "Fragancia versátil, moderna y sobria. Formato de 30ml ideal para cartera o mochila." },
+            { id: 13, title: "9PM Afnan Negro 30ml", brand: "Afnan", price: 13000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/2141_1f05d030-ad87-42cc-89b5-dd7579880ba2.jpg?v=1765921204&width=800", description: "Clon sofisticado de Ultra Male en envase de 30ml. Canela, manzana y vainilla pura." },
+            { id: 9, title: "Asad Negro Chico 50ml", brand: "Lattafa", price: 15000, category: "perfume", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778518046790-7276-17276-1.jpg", description: "Mismo aroma intenso de pimienta y ámbar en su práctica versión de 50ml." },
+            { id: 14, title: "Lattafa Fakhar BLACK 50ml", brand: "Lattafa", price: 15300, category: "perfume", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778518045947-7271-17271-1.jpg", description: "Fakhar de Lattafa es una fragancia unisex que equilibra frescura y calidez con una elegancia oriental moderna. Intensa, versátil y con excelente presencia, está diseñada para quienes buscan un perfume distintivo que funcione en cualquier ocasión. 50ml." },
+            { id: 15, title: "La Nuit Sparkle 50ml", brand: "Lattafa", price: 15300, category: "perfume", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763239041190-72717271.jpg", description: "a Nuit Tresor de Lancome es una fragancia de la familia olfativa Oriental Vainilla para Mujeres. Esta fragancia es nueva. La Nuit Trésor se lanzó en 2015. La Nuit Trésor fue creada por Christophe Raynaud y Amandine Clerc-Marie. Las Notas de Salida son pera, bergamota y naranja tangerina; las Notas de Corazón son orquídea de vainilla, rosa negra, maracuyá (fruta de la pasión) y fresa; las Notas de Fondo son pachulí, papiro de Egipto, incienso, lichi, praliné, vainilla, caramelos, café, cumarina y regaliz." },
+            { id: 8, title: "Asad Negro Grande 100ml", brand: "Lattafa", price: 26000, category: "perfume", image: "https://imgs.search.brave.com/1ZKIRpUnVegM7OuAeO1wUV9WvhCQ1lHukwG34fl22Qc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmVi/YXlpbWcuY29tL3Ro/dW1icy9pbWFnZXMv/Zy9ZdW9BQU9Td2k4/eGtzeWxCL3MtbDUw/MC5qcGc", description: "Inspiración especiada oscura de alta gama. Gran proyección, notas de pimienta negra and café." },
+            { id: 10, title: "Asad Bourbon 100ml", brand: "Lattafa", price: 26000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/16636.jpg?v=1771068539&width=800", description: "Variante cálida con toques de vainilla licorosa, maderas nobles y ámbar gris." },
+            { id: 16, title: "JINADI EVERYDAY 100ml", brand: "Lattafa", price: 26000, category: "perfume", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1764190599755-7270-1.jpg", description: "La versión grande de 100ml del perfume árabe femenino más vendido del mundo." },
+            { id: 1, title: "Odyssey Homme 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://imgs.search.brave.com/_t9EsL7CiS4SIBFcNsocDuS9ki2IitTZN8NcH6xCIEc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hY2Ru/LXVzLm1pdGllbmRh/bnViZS5jb20vc3Rv/cmVzLzAwMS8wNzEv/NTk2L3Byb2R1Y3Rz/LzYxbGNyaTE0N3ds/LWM1MzM4NGMwMDA5/NjExZjU0MzE3NjE5/NjQzMjAzMDM3LTQ4/MC0wLndlYnA", description: "Notas de salida: Vainilla y Ámbar. Nota de corazón: Especias orientales. Fragancia de larga duración, ideal para la noche." },
+            { id: 2, title: "Odyssey Candee 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://http2.mlstatic.com/D_NQ_NP_2X_804441-MLA107191521475_022026-F.webp", description: "Aroma dulce, juvenil y frutal. Excelente estela y persistencia en piel." },
+            { id: 3, title: "Odyssey Mandarin Sky Vintage 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/image_e7bb09ae-e12d-474f-b655-93b76778e327.png?v=1775680134&width=800https://arabicparfums.com/cdn/shop/files/image_e7bb09ae-e12d-474f-b655-93b76778e327.png?v=1775680134&width=800", description: "Edición vintage con marcadas notas cítricas de mandarina y fondo maderoso elegante." },
+            { id: 4, title: "Odyssey Mandarin Sky Elixir 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/perfume-con-notas-de-mandarina-lavanda-naranja-cardamomo-pimienta-negra-caramelo-haba-tonka-incienso-pachul-vainilla-y-vetiver_c45602c9-ef36-4f9f-9263-a37e8d606b6b.png?v=1771078241&width=800", description: "Concentración elixir intensa. Notas profundas y energéticas de cítricos premium." },
+            { id: 11, title: "Odyssey Chocolate Dubai 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/291F6DF5-68BD-4A16-A427-87C93A30BB06_webp_e6e81656-8e3f-4c90-bc3b-b914f537c565.jpg?v=1766096559&width=800", description: "Fragancia gourmand exquisita con acordes de chocolate oscuro, cacao y café de Dubai." },
+            { id: 12, title: "Odyssey Mandarin Sky clasico 100ml", brand: "Armaf", price: 30000, category: "perfume", image: "https://arabicparfums.com/cdn/shop/files/3336.jpg?v=1771058680&width=800", description: "La clásica combinación equilibrada de mandarina dulce y acordes limpios de salida." },
+            { id: 7, title: "Le Male / Tradicional 100ml", brand: "Jean Paul Gaultier", price: 44000, category: "perfume", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778518042270-7278-17278-1.jpg", description: "Un clásico masculino indiscutible. Notas de lavanda, menta y vainilla sensual." },
+            // REGALERÍA
+            { id: 50, title: "Perfumero Recargable Portátil c/u", brand: "Genérico", price: 1000, category: "regaleria", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763239038159-70597059.jpg" },
+            { id: 49, title: "Paraguas Plegable Cuadros 53cm", brand: "Genérico", price: 8000, category: "regaleria", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1763239050600-75507550.jpg" },
+            { id: 46, title: "Billetera 2 Cierres JH46-13", brand: "Genérico", price: 9000, category: "regaleria", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1778518046047-75157515.jpg", description: "Doble compartimento independiente con cierres reforzados." },
+            { id: 48, title: "Morral Gris c/ Bolsillo Delantero", brand: "Goodpak", price: 10000, category: "regaleria", image: "https://bunny-cdn.ventasxmayor.com/6063/public/5717460574924191/1778518041012-75737573.jpg" },
+            { id: 47, title: "Cartera CQ-B62414", brand: "Genérico", price: 15000, category: "regaleria", image: "https://bunny-cdn.ventasxmayor.com/6060d74cdbd6d24cdbd6d26363/public/5717460574924191/1778518050151-7514-17514-1.jpg" },
+            // VAMOS ARGENTINA
+            { id: 60, title: "BANDERA DEL INDIO SOLARI y MALVINAS", brand: "seleccion", price: 12500, category: "vamos-argentina", image: "https://scontent.fepa8-1.fna.fbcdn.net/v/t45.5328-4/735476001_1024933023417399_1285122576969132238_n.jpg?stp=c43.0.260.260a_dst-jpg_p261x260_tt6&_nc_cat=102&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeGUGeQFOOe5N_p9-emvXq8JAvF9ZqirPpYC8X1mqKs-lmQlQihdHYA5uqJEffl1b4yf7rQmFS7_0eHvU0z89Wp1&_nc_ohc=tS2x76vOqgsQ7kNvwF3iGC-&_nc_oc=Adq6uUkxcFVle8zJHEEKOdN6woyTaasusQlGjNH9OJepzJBAYnvu0ZHVDB8fBDwUY0GojH5ahGrp-_CdbScm04Vt&_nc_zt=23&_nc_ht=scontent.fepa8-1.fna&_nc_gid=njqvuQDEZmyBaqhzpTbJgg&_nc_ss=7b2a8&oh=00_AQBoTnT7_xTigatlUQGVq0VQNnCjxUWiUX3B2CXMwjUVlw&oe=6A570413", description: "Banderas artesanales para decorar." },
+            { id: 61, title: "CAPA DEL INDIO SOLARI y MALVINAS", brand: "Genérico", price: 6500, category: "vamos-argentina", image: "https://scontent.fepa8-1.fna.fbcdn.net/v/t45.5328-4/731478343_1461282799132662_4612678411172709923_n.jpg?stp=c0.43.261.261a_dst-jpg_p261x260_tt6&_nc_cat=107&ccb=1-7&_nc_sid=247b10&_nc_eui2=AeHKURhw0DU7AtOLz4YtKjUsrWQlomKRbTGtZCWiYpFtMWmHSofwcL00ES1pgO0VhpWxfWLFgKr76edxCZausdy7&_nc_ohc=QNOwbIeHuM8Q7kNvwETOJbu&_nc_oc=Ado7u-P3haLOxnERgZuvT3J5ykhQJMj-J3K_Is1raG-9eRcba06mIPaPci6R8TXrBMYyURdS5SSY1H78QVEJOIuQ&_nc_zt=23&_nc_ht=scontent.fepa8-1.fna&_nc_gid=avV4sGLgM-nR7Lqfdoc67A&_nc_ss=7b2a8&oh=00_AQC70EkWQdL9UbBJL16lwe7av8y_9wxbI3FfNnUqG5AOqQ&oe=6A5701E6", description: "Capas artesanales para decorar." }
+        ];
+
+        function displayProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            const query = document.getElementById('searchBar').value.toLowerCase();
+
+            const filtered = products.filter(p => {
+                const matchesCategory = (currentCategory === 'all' || p.category === currentCategory);
+                const matchesSearch = (p.title.toLowerCase().includes(query) || p.brand.toLowerCase().includes(query));
+                return matchesCategory && matchesSearch;
+            });
+
+            filtered.forEach((p) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.addEventListener('click', () => openModal(p));
+                
+                // Formatear el tag visualmente
+                const visualTag = p.category.replace('-', ' ').toUpperCase();
+                
+                card.innerHTML = `
+                    <div class="card-img">
+                        <img src="${p.image}" alt="${p.title}" onerror="this.src='https://placehold.co/400x400?text=Sin+Foto'">
+                    </div>
+                    <div class="card-body">
+                        <span class="tag">${visualTag}</span>
+                        <h3 class="card-title">${p.title}</h3>
+                        <p class="card-brand">Marca: ${p.brand}</p>
+                        <div class="price-row">
+                            <span class="price">$${p.price.toLocaleString('es-AR')}</span>
+                            <button class="btn-buy" onclick="addToCartById(${p.id})">＋ Agregar</button>
+                        </div>
+                    </div>
+                `;
+                
+                card.querySelector('.btn-buy').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        /* 🛒 LOGICA DEL CARRITO */
+        function addToCartById(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            document.getElementById('cartBadge').innerText = totalItems;
+
+            const container = document.getElementById('cartItems');
+            container.innerHTML = '';
+
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                totalPrice += subtotal;
+
+                const element = document.createElement('div');
+                element.className = 'cart-item';
+                element.innerHTML = `
+                    <img src="${item.image}" onerror="this.src='https://placehold.co/100x100?text=Item'">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">$${item.price.toLocaleString('es-AR')} x ${item.qty}</div>
+                        <div class="cart-qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑</button>
+                `;
+                container.appendChild(element);
+            });
+
+            document.getElementById('cartTotal').innerText = `$${totalPrice.toLocaleString('es-AR')}`;
+        }
+
+        function sendCartWhatsApp() {
+            if (cart.length === 0) {
+                alert("El carrito está vacío.");
+                return;
+            }
+
+            let msg = `🛍️ *NUEVO PEDIDO - L&A CONCEPT STORE*\n\n`;
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                msg += `${index + 1}. *${item.title}* (${item.brand})\n`;
+                msg += `   Unidades: ${item.qty} x $${item.price.toLocaleString('es-AR')}\n`;
+                msg += `   Subtotal: *$${subtotal.toLocaleString('es-AR')}*\n\n`;
+            });
+
+            msg += `_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n`;
+            msg += `💰 *TOTAL RECAUDADO:* *$${total.toLocaleString('es-AR')}*\n\n`;
+            msg += `¿Me confirman disponibilidad para coordinar el retiro/envío? 🙌`;
+
+            const encodedText = encodeURIComponent(msg);
+            const numeroAsignado = misNumerosWhatsApp[Math.floor(Math.random() * misNumerosWhatsApp.length)];
+            const whatsappUrl = `https://wa.me/${numeroAsignado}?text=${encodedText}`;
+
+            window.open(whatsappUrl, '_blank');
+        }
+
+        /* 📦 MODALES Y MENUS */
+        function openModal(product) {
+            document.getElementById('modalImg').src = product.image;
+            document.getElementById('modalTitle').innerText = product.title;
+            document.getElementById('modalBrand').innerText = "Marca: " + product.brand;
+            
+            const desc = product.description ? product.description : "Sin especificaciones detalladas por el momento. Consultanos disponibilidad de colores o variantes directamente por nuestro canal de atención.";
+            document.getElementById('modalSpecs').innerText = desc;
+            
+            document.getElementById('modalPrice').innerText = "$" + product.price.toLocaleString('es-AR');
+            document.getElementById('modalActionBtn').innerHTML = `
+                <button class="btn-buy" style="font-size:1rem; padding:0.7rem 1.2rem;" onclick="addToCartById(${product.id}); closeModal(null, true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" width="18px" height="18px" style="display:inline; vertical-align:middle; margin-right:5px;">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.9 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg> Agregar al carrito
+                </button>
+            `;
+            
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal(event = null, force = false) {
+            if (force || (event && event.target.classList.contains('modal-overlay'))) {
+                document.getElementById('productModal').classList.remove('active');
+            }
+        }
+
+        function filterCategory(category, element) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            displayProducts();
+        }
+
+        function filterProducts() {
+            displayProducts();
+        }
+
+        function toggleMenu() {
+            document.getElementById('sidebarCart').classList.remove('open');
+            document.getElementById('sidebarMenu').classList.toggle('open');
+        }
+
+        function toggleCart() {
+            document.getElementById('sidebarMenu').classList.remove('open');
+            document.getElementById('sidebarCart').classList.toggle('open');
+        }
+
+        /* ℹ️ FUNCIONES PARA MANEJAR EL DESPLIEGUE DE "ACERCA DE NOSOTROS" */
+        function toggleAboutSection() {
+            const section = document.getElementById('acerca-de-nosotros');
+            section.classList.toggle('active');
+        }
+
+        function openAboutSection() {
+            const section = document.getElementById('acerca-de-nosotros');
+            section.classList.add('active');
+        }
+
+        // Renderizado inicial
+        displayProducts();
+    </script>
+</body>
+</html>
+    
